@@ -21,12 +21,20 @@ provider:
       Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-noteTable-${sls:stage}
 
 functions:
-  createPost:
+  createNote:
     handler: functions/createNote.createNote
     events:
       - http:
           path: note/create
           method: post
+          cors: true
+
+  listNotes:
+    handler: functions/listNotes.listNotes
+    events:
+      - http:
+          path: note/list
+          method: get
           cors: true
 
 resources:
