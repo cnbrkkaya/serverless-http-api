@@ -6,6 +6,9 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs14.x
+  environment:
+    DYNAMODB_NOTE_TABLE: ${self:service}-noteTable-${sls:stage}
+  region: us-east-1
 
 functions:
   hello:
@@ -14,3 +17,19 @@ functions:
       - httpApi:
           path: /
           method: get
+
+resources:
+  Resources:
+    NoteTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: noteId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: noteId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:service}-noteTable-${sls:stage}
