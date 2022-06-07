@@ -9,14 +9,25 @@ provider:
   environment:
     DYNAMODB_NOTE_TABLE: ${self:service}-noteTable-${sls:stage}
   region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-noteTable-${sls:stage}
 
 functions:
-  hello:
-    handler: handler.hello
+  createPost:
+    handler: functions/createNote.createNote
     events:
-      - httpApi:
-          path: /
-          method: get
+      - http:
+          path: note/create
+          method: post
+          cors: true
 
 resources:
   Resources:

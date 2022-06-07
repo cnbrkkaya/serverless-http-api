@@ -1,0 +1,12 @@
+{
+  "name": "noteapp",
+  "version": "1.0.0",
+  "description": "Rest api using serverless framework",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1149.0",
+    "uuid": "^8.3.2"
+  }
+}
