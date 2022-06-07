@@ -36,6 +36,13 @@ functions:
           path: note/list
           method: get
           cors: true
+  getNote:
+    handler: functions/getNote.getNote
+    events:
+      - http:
+          path: note/{id}
+          method: get
+          cors: true
 
 resources:
   Resources:
