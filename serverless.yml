@@ -51,6 +51,13 @@ functions:
           path: note/delete/{id}
           method: delete
           cors: true
+  updateNote:
+    handler: functions/updateNote.updateNote
+    events:
+      - http:
+          path: note/update
+          method: put
+          cors: true
 
 resources:
   Resources:
