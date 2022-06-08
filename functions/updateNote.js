@@ -1,20 +1,7 @@
 'use strict'
 
 const dynamoDb = require('../config/dynamoDb')
-
-//Creating response object
-function sendResponse(statusCode, body) {
-  const response = {
-    statusCode: statusCode,
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-    },
-  }
-  return response
-}
+const { sendResponse } = require('../utils/sendResponse')
 
 module.exports.updateNote = async (event) => {
   //this control is for testing from both serverless dasboard and postman
@@ -32,6 +19,8 @@ module.exports.updateNote = async (event) => {
       ExpressionAttributeValues: {
         ':noteMessage': noteMessage,
       },
+      //prevent creating if the note doesn't exist
+      ConditionExpression: 'attribute_exists(noteId)',
       UpdateExpression: 'SET noteMessage = :noteMessage',
       ReturnValues: 'ALL_NEW',
     }

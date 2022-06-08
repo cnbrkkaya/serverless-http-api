@@ -1,20 +1,7 @@
 'use strict'
 
 const dynamoDb = require('../config/dynamoDb')
-
-//Creating response object
-function sendResponse(statusCode, body) {
-  const response = {
-    statusCode: statusCode,
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-    },
-  }
-  return response
-}
+const { sendResponse } = require('../utils/sendResponse')
 
 module.exports.getNote = async (event) => {
   try {
